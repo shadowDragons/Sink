@@ -8,7 +8,7 @@ export default eventHandler(async event => {
 
   // 如果用户没有提供slug，先生成一个
   if (!userProvidedSlug) {
-    body.slug = nanoid()
+    body.slug = nanoid()()
   }
 
   const link = LinkSchema.parse(body)
@@ -41,7 +41,7 @@ export default eventHandler(async event => {
     while (attempts < maxAttempts) {
       // 检查是否为保留slug
       if (reserveSlug.includes(link.slug!)) {
-        link.slug = nanoid()
+        link.slug = nanoid()()
         attempts++
         continue
       }
@@ -53,7 +53,7 @@ export default eventHandler(async event => {
       }
 
       // 重新生成slug
-      link.slug = nanoid()
+      link.slug = nanoid()()
       attempts++
     }
 
